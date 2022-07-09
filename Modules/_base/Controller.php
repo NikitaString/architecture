@@ -10,11 +10,13 @@ class Controller implements IController{
 	protected string $title = '';
 	protected string $content = '';
 	protected array $env;
-
+	
+	// устанавливаем значения параметров из URL
 	public function setEnviroment(array $urlParams) : void{
 		$this->env = $urlParams;
 	}
 	
+	// генерация шаблона
 	public function render() : string{
 		return Template::render(__DIR__ . '/v_main.php', [
 			'title' => $this->title,

@@ -9,6 +9,10 @@ use System\ModulesDispatcher;
 use Modules\Articles\Module as Articles;
 
 const BASE_URL = '/Framework/';
+const DB_HOST = 'localhost';
+const DB_NAME = 'oop';
+const DB_USER = 'root';
+const DB_PASS = '';
 
 try{	
 	$modules = new ModulesDispatcher();

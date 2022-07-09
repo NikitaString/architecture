@@ -2,31 +2,51 @@
 
 namespace Modules\Articles\Controllers;
 
-use System\Contracts\IStorage;
 use Modules\_base\Controller as BaseController;
-
-use System\FileStorage;
+use Modules\Articles\Models\Index as ModelsIndex;
+use System\Exceptions\ExcValidation;
 use System\Template;
 
 class Index extends BaseController{
-	protected IStorage $storage;
+	protected ModelsIndex $model;
 
+	// экземпляр класса Model
 	public function __construct(){
-		$this->storage = FileStorage::getInstance('db/articles.txt'); // yes-yes, without DI it is trash
+		$this->model = ModelsIndex::getInstance();
 	}
 
 	public function index(){
+		$articles = $this->model->all();
+
 		$this->title = 'Home page';
-		$this->content = 'Articles list';
+		$this->content = Template::render(__DIR__ . '/../Views/v_all.php', [
+			'articles' => $articles
+		]);
 	}
 
 	public function item(){
 		$this->title = 'Article page';
 		$id = (int)$this->env[1];
-		$article = $this->storage->get($id);
+		$article = $this->model->get($id);
 
 		$this->content = Template::render(__DIR__ . '/../Views/v_item.php', [
 			'article' => $article
 		]);
+	}
+
+	public function add() {
+		$this->title = 'Article add';
+		$this->content = '111';
+
+		try{
+			$this->model->add(['title' => '', 'content' => '13']);
+		}
+		catch(ExcValidation $e) {
+			$this->content = 'cant add article';
+		}
+	}
+
+	public function remove() {
+		var_dump($this->model->remove(1));
 	}
 }

@@ -6,7 +6,7 @@ use System\Contracts\IModule;
 use System\Contracts\IRouter;
 
 class ModulesDispatcher{
-	protected array $modules = [];
+	protected array $modules = []; // массив модулей
 
 	public function add(IModule $module) : void{
 		$this->modules[] = $module;

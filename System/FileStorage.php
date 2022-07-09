@@ -10,6 +10,7 @@ class FileStorage implements IStorage{
 	protected string $dbPath;
 	protected static array $instances = [];
 
+	// singleton для одного подключения к базе
 	public static function getInstance($dbPath) : self{
 		if(!isset(self::$instances[$dbPath])){
 			self::$instances[$dbPath] = new self($dbPath);
